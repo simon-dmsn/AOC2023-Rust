@@ -1,0 +1,31 @@
+[package]
+name = "adventofcode"
+version = "0.0.1"
+edition = "2021" # edition of cargo not adventofcode lol
+authors = ["Simon"]
+default-run = "adventofcode"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+time = "0.3.30"
+
+
+[dev-dependencies]
+criterion = "0.5.1"
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+
+[[bench]]
+name = "benches"
+harness = false
+
+[[bin]]
+name = "day01"
+path = "src/day01.rs"
+
+[[bin]]
+name = "day02"
+path = "src/day02.rs"
