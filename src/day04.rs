@@ -51,9 +51,8 @@ pub fn part_b(input: &str) -> u64 {
         index += 1;
     }
 
-    //let sum : u32 = array_of_cards.iter().sum();
 
-    return array_of_cards.iter().fold(0,|acc,x| acc+x) as u64;
+    return array_of_cards.iter().sum::<u32>() as u64;
 }
 
 pub fn main() {

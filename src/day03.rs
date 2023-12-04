@@ -5,12 +5,12 @@ pub fn part_a(input: &str) -> u64 {
     let re = Regex::new(r"[0-9]+").unwrap();
     let mut matrix: Vec<Vec<bool>> = Vec::new();
     let mut row_number: usize = 0;
-    let mut lineLength: usize = 0;
+    let mut line_length: usize = 0;
     for line in input.lines() {
-        lineLength = line.len();
+        line_length = line.len();
         matrix.push(Vec::new());
         for char in line.chars() {
-            if (char == '.') {
+            if char == '.' {
                 matrix[row_number].push(false);
             } else if char.is_digit(10) {
                 matrix[row_number].push(false);
@@ -25,43 +25,43 @@ pub fn part_a(input: &str) -> u64 {
         }
         row_number += 1;
     }
-    let mut bigSum: u64 = 0;
-    lineLength = lineLength - 1;
+    let mut big_sum: u64 = 0;
+    line_length = line_length - 1;
     row_number = row_number - 1;
-    for (number, mut row, start, end) in array {
-        let mut isValid = false;
+    for (number, row, start, end) in array {
+        let mut is_valid = false;
         for pos in start..end {
             if (row > 0) && matrix[row - 1][pos] {
-                isValid = true;
+                is_valid = true;
             }
             if (row < row_number) && matrix[row + 1][pos] {
-                isValid = true;
+                is_valid = true;
             }
             if (pos > 0) && matrix[row][pos - 1] {
-                isValid = true;
+                is_valid = true;
             }
-            if (pos < lineLength) && matrix[row][pos + 1] {
-                isValid = true;
+            if (pos < line_length) && matrix[row][pos + 1] {
+                is_valid = true;
             }
             if (row > 0) && (pos > 0) && matrix[row - 1][pos - 1] {
-                isValid = true;
+                is_valid = true;
             }
-            if (row > 0) && (pos < lineLength) && matrix[row - 1][pos + 1] {
-                isValid = true;
+            if (row > 0) && (pos < line_length) && matrix[row - 1][pos + 1] {
+                is_valid = true;
             }
             if (row < row_number) && (pos > 0) && matrix[row + 1][pos - 1] {
-                isValid = true;
+                is_valid = true;
             }
-            if (row < row_number) && (pos < lineLength) && matrix[row + 1][pos + 1] {
-                isValid = true;
+            if (row < row_number) && (pos < line_length) && matrix[row + 1][pos + 1] {
+                is_valid = true;
             }
         }
-        if isValid {
-            bigSum += number as u64
+        if is_valid {
+            big_sum += number as u64
         }
     }
 
-    return bigSum;
+    return big_sum;
 }
 
 pub fn part_b(input: &str) -> u64 {
@@ -69,87 +69,85 @@ pub fn part_b(input: &str) -> u64 {
     let re = Regex::new(r"[0-9]+").unwrap();
     let mut matrix: Vec<Vec<bool>> = Vec::new();
     let mut map : Vec<Vec<Option<Vec<u32>>>> = Vec::new();
-    let mut rowNumber: usize = 0;
-    let mut lineLength: usize = 0;
+    let mut row_number: usize = 0;
+    let mut line_length: usize = 0;
     for line in input.lines() {
-        lineLength = line.len();
+        line_length = line.len();
         matrix.push(Vec::new());
         map.push(Vec::new());
-        let mut x: usize = 0;
         for char in line.chars() {
-            if (char == '.') {
-                matrix[rowNumber].push(false);
-                map[rowNumber].push(None);
+            if char == '.' {
+                matrix[row_number].push(false);
+                map[row_number].push(None);
             } else if char == '*' {
-                map[rowNumber].push(Some(Vec::new()));
-                matrix[rowNumber].push(true);
+                map[row_number].push(Some(Vec::new()));
+                matrix[row_number].push(true);
 
             } else if char.is_digit(10) {
-                matrix[rowNumber].push(false);
-                map[rowNumber].push(None);
+                matrix[row_number].push(false);
+                map[row_number].push(None);
             } else {
-                map[rowNumber].push(None);
-                matrix[rowNumber].push(true);
+                map[row_number].push(None);
+                matrix[row_number].push(true);
             }
-            x+=1;
         }
         for ma in re.find_iter(line) {
-            array.push((ma.as_str().parse().unwrap(), rowNumber, ma.start(), ma.end()));
+            array.push((ma.as_str().parse().unwrap(), row_number, ma.start(), ma.end()));
         }
-        rowNumber += 1;
+        row_number += 1;
     }
-    let mut bigSum: u64 = 0;
-    lineLength = lineLength - 1;
-    rowNumber = rowNumber - 1;
+    let mut big_sum: u64 = 0;
+    line_length = line_length - 1;
+    row_number = row_number - 1;
     for (number, row, start, end) in array {
-        let mut gearAdded = false;
+        let mut gear_added = false;
         for pos in start..end {
             if (row > 0) && matrix[row - 1][pos] {
-                if(map[row-1][pos].is_some() && !gearAdded) {
-                    gearAdded = true;
+                if map[row-1][pos].is_some() && !gear_added {
+                    gear_added = true;
                     map[row-1][pos].as_mut().unwrap().push(number);
                 }
 
             }
-            if (row < rowNumber) && matrix[row + 1][pos] {
-                if(map[row+1][pos].is_some() && !gearAdded) {
-                    gearAdded = true;
+            if (row < row_number) && matrix[row + 1][pos] {
+                if map[row+1][pos].is_some() && !gear_added {
+                    gear_added = true;
                     map[row+1][pos].as_mut().unwrap().push(number);
                 }
             }
             if (pos > 0) && matrix[row][pos - 1] {
-                if(map[row][pos-1].is_some() && !gearAdded) {
-                    gearAdded = true;
+                if map[row][pos-1].is_some() && !gear_added {
+                    gear_added = true;
                     map[row][pos-1].as_mut().unwrap().push(number);
                 }
             }
-            if (pos < lineLength) && matrix[row][pos + 1] {
-                if(map[row][pos+1].is_some() && !gearAdded) {
-                    gearAdded = true;
+            if (pos < line_length) && matrix[row][pos + 1] {
+                if map[row][pos+1].is_some() && !gear_added {
+                    gear_added = true;
                     map[row][pos+1].as_mut().unwrap().push(number);
                 }
             }
             if (row > 0) && (pos > 0) && matrix[row - 1][pos - 1] {
-                if(map[row-1][pos-1].is_some() && !gearAdded) {
-                    gearAdded = true;
+                if map[row-1][pos-1].is_some() && !gear_added {
+                    gear_added = true;
                     map[row-1][pos-1].as_mut().unwrap().push(number);
                 }
             }
-            if (row > 0) && (pos < lineLength) && matrix[row - 1][pos + 1] {
-                if(map[row-1][pos+1].is_some() && !gearAdded) {
-                    gearAdded = true;
+            if (row > 0) && (pos < line_length) && matrix[row - 1][pos + 1] {
+                if map[row-1][pos+1].is_some() && !gear_added {
+                    gear_added = true;
                     map[row-1][pos+1].as_mut().unwrap().push(number);
                 }
             }
-            if (row < rowNumber) && (pos > 0) && matrix[row + 1][pos - 1] {
-                if(map[row+1][pos-1].is_some() && !gearAdded) {
-                    gearAdded = true;
+            if (row < row_number) && (pos > 0) && matrix[row + 1][pos - 1] {
+                if map[row+1][pos-1].is_some() && !gear_added {
+                    gear_added = true;
                     map[row+1][pos-1].as_mut().unwrap().push(number);
                 }
             }
-            if (row < rowNumber) && (pos < lineLength) && matrix[row + 1][pos + 1] {
-                if(map[row+1][pos+1].is_some() && !gearAdded) {
-                    gearAdded = true;
+            if (row < row_number) && (pos < line_length) && matrix[row + 1][pos + 1] {
+                if map[row+1][pos+1].is_some() && !gear_added {
+                    gear_added = true;
                     map[row+1][pos+1].as_mut().unwrap().push(number);
                 }
             }
@@ -157,12 +155,12 @@ pub fn part_b(input: &str) -> u64 {
     }
     for vec in map  {
         for mut opt in vec {
-            if(opt.is_some() && opt.as_mut().unwrap().len() == 2) {
-                bigSum += (opt.as_mut().unwrap()[0]*opt.as_mut().unwrap()[1]) as u64;
+            if opt.is_some() && opt.as_mut().unwrap().len() == 2 {
+                big_sum += (opt.as_mut().unwrap()[0]*opt.as_mut().unwrap()[1]) as u64;
             }
         }
     }
-    return bigSum;
+    return big_sum;
 }
 
 
