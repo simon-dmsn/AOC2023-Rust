@@ -45,13 +45,10 @@ fn parse_maps_seeds(input: &str) -> (Vec<u64>,  Vec<Vec<(u64, u64, u64)>>) {
 
 fn parse_maps(input: &str) -> Vec<RangeMap<i64,i64>> {
     let mut ind = 0;
-    let mut seeds = vec![];
     let mut ind_maps: usize = 0;
     let mut maps : Vec<RangeMap<i64,i64>> = Vec::new();
     for line in input.lines() {
-        if ind == 0 {
-            seeds = parse_seeds(line);
-        } else {
+        if ind != 0 {
             if line.is_empty() {}
             else if line.split_whitespace().next().unwrap_or("je").parse::<u64>().is_err() {
                 maps.push(RangeMap::new());

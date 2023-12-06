@@ -8,7 +8,7 @@ fn parse_input_a(input : &str) -> Vec<(u64,u64)> {
     let mut first_l = true;
     for line in input.lines() {
         for num in line.split_whitespace().skip(1) {
-            if(first_l) {
+            if first_l {
                 time.push(num.parse::<u64>().unwrap());
             } else {
                 distance.push(num.parse::<u64>().unwrap());
@@ -27,7 +27,7 @@ fn parse_input_b(input : &str) -> (u64,u64) {
     for line in input.lines() {
         let l : Vec<_> = line.split_once(' ').unwrap().1.chars().filter(|c| { !c.is_whitespace()}).collect(); {
             let str : &str = &(l.into_iter().collect::<String>());
-            if(first_l) {
+            if first_l {
                 tuple.0 = str.parse().unwrap();
             } else {
                 tuple.1 = str.parse().unwrap();
@@ -62,14 +62,22 @@ pub fn solve_a(input : &str) -> u64 {
 pub fn solve_b(input : &str) -> u64 {
     let (time,distance) = parse_input_b(input);
 
-    let mut ways: u64 = 0;
+    let mut first : u64 = 0;
     for i in 0..(time+1) {
         if beat_record_verification(i,time,distance) {
-            ways+=1;
+            first = i;
+            break;
+        }
+    }
+    let mut last : u64 = 0;
+    for i in (0..time+1).rev() {
+        if beat_record_verification(i,time,distance) {
+            last = i;
+            break;
         }
     }
 
-    return ways;
+    return last - first + 1;
 }
 
 pub fn main() {
