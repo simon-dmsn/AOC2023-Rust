@@ -1,7 +1,6 @@
+use itertools::Itertools;
 
-
-
-fn parse_input_a(input : &str) -> Vec<(u64,u64)> {
+fn parse_input_a(input : &str) -> Vec<(u64, u64)> {
     let mut time = vec![];
     let mut distance = vec![];
 
@@ -25,12 +24,11 @@ fn parse_input_b(input : &str) -> (u64,u64) {
 
     let mut first_l = true;
     for line in input.lines() {
-        let l : Vec<_> = line.split_once(' ').unwrap().1.chars().filter(|c| { !c.is_whitespace()}).collect(); {
-            let str : &str = &(l.into_iter().collect::<String>());
+        let l : u64 = line.split_whitespace().skip(1).join("").parse().unwrap(); {
             if first_l {
-                tuple.0 = str.parse().unwrap();
+                tuple.0 = l;
             } else {
-                tuple.1 = str.parse().unwrap();
+                tuple.1 = l;
             }
         }
         first_l = false;
