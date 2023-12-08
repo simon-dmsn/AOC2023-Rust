@@ -13,6 +13,7 @@ regex = "1.10.2"
 rangemap = "1.4.0"
 lazy-regex = "3.1.0"
 itertools = "0.12.0"
+num = "0.4.1"
 
 [dev-dependencies]
 criterion = "0.5.1"
@@ -52,3 +53,7 @@ path = "src/day06.rs"
 [[bin]]
 name = "day07"
 path = "src/day07.rs"
+
+[[bin]]
+name = "day08"
+path = "src/day08.rs"
