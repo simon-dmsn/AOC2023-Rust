@@ -14,31 +14,33 @@ fn parse_input(input: &str) -> Vec<Vec<i64>> {
     return vec;
 }
 
+fn get_next_number(line : Vec<i64>) -> i64 {
+    let mut full_of_zeros = false;
+    let mut vec = line;
+    let mut sum = vec.last().unwrap().clone();
+
+    while !full_of_zeros {
+        let mut temp_vec = vec![];
+        let mut count = 0;
+        for i in 0..vec.len()-1 {
+            let dif = vec[i+1] -vec[i];
+            if dif == 0 {count+=1};
+            temp_vec.push(dif);
+
+        }
+        vec = temp_vec.to_owned();
+        sum += vec.last().unwrap();
+        if count == vec.len() {full_of_zeros = true;}
+    }
+    return sum;
+}
+
 fn solve_a(input: &str) -> i64 {
     let mut inp = parse_input(input);
 
     let mut big_sum = 0;
     for line in inp {
-        println!("{:?}",line);
-        let mut full_of_zeros = false;
-        let mut vec = line;
-        let mut sum = vec.last().unwrap().clone();
-
-        while !full_of_zeros {
-            let mut temp_vec = vec![];
-            let mut count = 0;
-            for i in 0..vec.len()-1 {
-                let dif = vec[i+1] -vec[i];
-                if dif == 0 {count+=1};
-                temp_vec.push(dif);
-
-            }
-            vec = temp_vec.to_owned();
-            sum += vec.last().unwrap();
-            if count == vec.len() {full_of_zeros = true;}
-        }
-        println!("nombre proposé : {}",sum);
-        big_sum += sum;
+        big_sum += get_next_number(line);
     }
 
 
@@ -49,27 +51,9 @@ fn solve_b(input: &str) -> i64 {
     let mut inp = parse_input(input);
 
     let mut big_sum = 0;
-    for line in inp {
-        println!("{:?}",line);
-        let mut full_of_zeros = false;
-        let mut vec = line;
-        let mut sum = vec.first().unwrap().clone();
-
-        while !full_of_zeros {
-            let mut temp_vec = vec![];
-            let mut count = 0;
-            for i in 0..vec.len()-1 {
-                let dif = vec[i+1] -vec[i];
-                if dif == 0 {count+=1};
-                temp_vec.push(dif);
-
-            }
-            vec = temp_vec.to_owned();
-            sum -= vec.first().unwrap();
-            if count == vec.len() {full_of_zeros = true;}
-        }
-        println!("nombre proposé : {}",sum);
-        big_sum += sum;
+    for mut line in inp {
+        line.reverse();
+        big_sum += get_next_number(line);
     }
 
 
