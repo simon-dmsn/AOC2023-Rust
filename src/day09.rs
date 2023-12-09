@@ -14,23 +14,22 @@ fn parse_input(input: &str) -> Vec<Vec<i64>> {
     return vec;
 }
 
-fn get_next_number(line : Vec<i64>) -> i64 {
+fn get_next_number(mut line: Vec<i64>) -> i64 {
     let mut full_of_zeros = false;
-    let mut vec = line;
-    let mut sum = vec.last().unwrap().clone();
+    let mut sum = line.last().unwrap().clone();
 
     while !full_of_zeros {
         let mut temp_vec = vec![];
-        let mut count = 0;
-        for i in 0..vec.len()-1 {
-            let dif = vec[i+1] -vec[i];
-            if dif == 0 {count+=1};
-            temp_vec.push(dif);
+        let mut count_of_zeros = 0;
 
-        }
-        vec = temp_vec.to_owned();
-        sum += vec.last().unwrap();
-        if count == vec.len() {full_of_zeros = true;}
+        temp_vec = line.windows(2).map(|wind| {
+            let t = wind[1] - wind[0];
+            if(t==0) { count_of_zeros +=1};
+            t
+        }).collect();
+        line = temp_vec.to_owned();
+        sum += line.last().unwrap();
+        if count_of_zeros == line.len() {full_of_zeros = true;}
     }
     return sum;
 }
@@ -52,6 +51,7 @@ fn solve_b(input: &str) -> i64 {
 
     let mut big_sum = 0;
     for mut line in inp {
+
         line.reverse();
         big_sum += get_next_number(line);
     }
