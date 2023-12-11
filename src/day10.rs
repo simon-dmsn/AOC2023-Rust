@@ -87,26 +87,41 @@ fn solve_b(input: &str) -> u64 {
                 ptr_tunnel = matrix[pos.0 - 1][pos.1].clone();
                 pos.0 -= 1;
                 last_use = 'S';
-                mat_bool[pos.0][pos.1] = 1;
-
+                if matrix[pos.0][pos.1].contains(&'S') || matrix[pos.0][pos.1].contains(&'N') {
+                    mat_bool[pos.0][pos.1] = 1;
+                } else {
+                    mat_bool[pos.0][pos.1] = 3;
+                }
                 break;
             } else if char == 'S' && pos.0 < (matrix.len() - 1) && matrix[pos.0 + 1][pos.1].contains(&'N') {
                 ptr_tunnel = matrix[pos.0 + 1][pos.1].clone();
                 pos.0 += 1;
                 last_use = 'N';
-                mat_bool[pos.0][pos.1] = 1;
+                if matrix[pos.0][pos.1].contains(&'S') || matrix[pos.0][pos.1].contains(&'N') {
+                    mat_bool[pos.0][pos.1] = 1;
+                } else {
+                    mat_bool[pos.0][pos.1] = 3;
+                }
                 break;
             } else if char == 'W' && pos.1 > 0 && matrix[pos.0][pos.1 - 1].contains(&'E') {
                 ptr_tunnel = matrix[pos.0][pos.1 - 1].clone();
                 pos.1 -= 1;
                 last_use = 'E';
-                mat_bool[pos.0][pos.1] = 1;
+                if matrix[pos.0][pos.1].contains(&'S') || matrix[pos.0][pos.1].contains(&'N') {
+                    mat_bool[pos.0][pos.1] = 1;
+                } else {
+                    mat_bool[pos.0][pos.1] = 3;
+                }
                 break;
             } else if char == 'E' && pos.1 < (matrix.len() - 1) && matrix[pos.0][pos.1 + 1].contains(&'W') {
                 ptr_tunnel = matrix[pos.0][pos.1 + 1].clone();
                 pos.1 += 1;
                 last_use = 'W';
-                mat_bool[pos.0][pos.1] = 1;
+                if matrix[pos.0][pos.1].contains(&'S') || matrix[pos.0][pos.1].contains(&'N') {
+                    mat_bool[pos.0][pos.1] = 1;
+                } else {
+                    mat_bool[pos.0][pos.1] = 3;
+                }
                 break;
             }
         }
@@ -117,36 +132,20 @@ fn solve_b(input: &str) -> u64 {
 
     // now we have to check for the point inside the loop formed by all the true in the mat_bool
     let mut count = 0;
-     //mat_bool.iter().for_each(|f|{f.iter().for_each(|b| {if (*b) {print!("1, ") }else {print!("0, ")}});println!(""); });
+    mat_bool.iter().for_each(|f|{f.iter().for_each(|b| {print!("{} ",*b) });println!(""); });
 
-    let mut vec_verif = vec![false;matrix.len()];
+    let mut vec_verif = vec![false; matrix.len()];
 
-    for line in mat_bool.iter_mut() {
-        let ind = line.iter().position(|p| { *p == 1 }).unwrap_or(line.len());
-        let ind_l = line.iter().rev().position(|p| { *p == 1}).unwrap_or(line.len());
 
-        for i in 0..ind {
-            line[i] = 2;
-        }
-        for i in ind_l+1..line.len() {
-            line[i] = 2;
-        }
-        println!("{:?}",line);
-    }
-    for (index, line) in mat_bool.into_iter().enumerate() {
-        let positions_true = line.iter().positions(|x| *x == 1);
-
-        for (pos1, pos2) in positions_true.tuple_windows() {
-            if !vec_verif[pos1] || !vec_verif[pos2] {
-                vec_verif[pos1] = true;
-                vec_verif[pos2] = true;
-            } else {
-                for i in pos1+1..pos2 {
-                    if line[i] == 0 {
-                        count+=1;
-                    }
-                }
+    for (x, line) in mat_bool.into_iter().enumerate() {
+        let mut is_inner =false;
+        for y in line {
+            if y == 1 {
+                is_inner = !is_inner;
+            } else if is_inner && y == 0 {
+                count +=1;
             }
+
         }
     }
 
