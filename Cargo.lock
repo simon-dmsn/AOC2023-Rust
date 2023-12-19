@@ -9,7 +9,9 @@ dependencies = [
  "criterion",
  "itertools 0.12.0",
  "lazy-regex",
+ "nd_vec",
  "num",
+ "num-traits",
  "rangemap",
  "regex",
  "time",
@@ -322,6 +324,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5a634b1c61a95585bd15607c6ab0c4e5b226e695ff2800ba0cdccddf208c406c"
 dependencies = [
  "autocfg",
+]
+
+[[package]]
+name = "nd_vec"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "feb6d97b3da527dc7426d665f8e5e285d07783f8e4c624c8478ce4d63abd8d62"
+dependencies = [
+ "num-traits",
 ]
 
 [[package]]

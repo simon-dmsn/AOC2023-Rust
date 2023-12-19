@@ -14,6 +14,8 @@ rangemap = "1.4.0"
 lazy-regex = "3.1.0"
 itertools = "0.12.0"
 num = "0.4.1"
+num-traits = "0.2.17"
+nd_vec = "0.4.0"
 
 [dev-dependencies]
 criterion = "0.5.1"
@@ -81,3 +83,7 @@ path = "src/day15.rs"
 [[bin]]
 name = "day17"
 path = "src/day17.rs"
+
+[[bin]]
+name = "day18"
+path = "src/day18.rs"
