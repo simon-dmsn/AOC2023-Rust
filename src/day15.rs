@@ -1,4 +1,3 @@
-use itertools::Itertools;
 
 fn hash_value(input: &str) -> u64 {
     return input.chars().fold(0, |mut acc, char| {

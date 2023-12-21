@@ -1,6 +1,4 @@
 use std::collections::HashMap;
-use std::ops::Index;
-use itertools::Itertools;
 
 
 fn parse_input(input: &str) -> Vec<Vec<Vec<char>>> {
@@ -20,7 +18,7 @@ fn parse_input(input: &str) -> Vec<Vec<Vec<char>>> {
 }
 
 fn solve_a(input: &str) -> u64 {
-    let mut matrix: Vec<Vec<Vec<char>>> = parse_input(input);
+    let matrix: Vec<Vec<Vec<char>>> = parse_input(input);
 
     let vec_s = vec!['S', 'W', 'N', 'E', 'Z'];
     let x_s = matrix.iter().position(|line| line.iter().find(|v| (**v).eq(&vec_s)).is_some()).unwrap();
@@ -68,7 +66,7 @@ fn solve_a(input: &str) -> u64 {
 }
 
 fn solve_b(input: &str) -> u64 {
-    let mut matrix: Vec<Vec<Vec<char>>> = parse_input(input);
+    let matrix: Vec<Vec<Vec<char>>> = parse_input(input);
     let mut mat_bool: Vec<Vec<u8>> = vec![vec![0; matrix.len()]; matrix.len()];
 
     let vec_s = vec!['S', 'W', 'N', 'E', 'Z'];
@@ -134,10 +132,9 @@ fn solve_b(input: &str) -> u64 {
     let mut count = 0;
     mat_bool.iter().for_each(|f|{f.iter().for_each(|b| {print!("{} ",*b) });println!(""); });
 
-    let mut vec_verif = vec![false; matrix.len()];
 
 
-    for (x, line) in mat_bool.into_iter().enumerate() {
+    for (_x, line) in mat_bool.into_iter().enumerate() {
         let mut is_inner =false;
         for y in line {
             if y == 1 {

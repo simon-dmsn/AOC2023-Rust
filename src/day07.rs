@@ -1,4 +1,3 @@
-use std::collections::{HashMap, HashSet};
 use itertools::Itertools;
 
 fn parse_input(input: &str) -> Vec<(Vec<u32>, u32)> {
@@ -53,12 +52,12 @@ fn get_power_cards(vec: Vec<(Vec<u32>, u32)>) -> Vec<(u32, Vec<u32>, u32)> {
 
         cards.sort_unstable();
         let count = cards.into_iter().dedup_with_count();
-        let sorted = count.sorted_unstable_by_key(|(n, count)| { *n });
+        let sorted = count.sorted_unstable_by_key(|(n, _count)| { *n });
         let mut pair = 0;
         let mut brelan = false;
         let mut carre = false;
         let mut cinq = false;
-        for (count, n) in sorted {
+        for (count, _n) in sorted {
             match count {
                 2 => pair += 1,
                 3 => brelan = true,
@@ -93,8 +92,8 @@ fn get_power_cards_b(vec: Vec<(Vec<u32>, u32)>) -> Vec<(u32, Vec<u32>, u32)> {
 
         cards.sort_unstable();
         let count_1 = cards.into_iter().dedup_with_count();
-        let sorted = count_1.sorted_unstable_by_key(|(count, n)| { *count });
-        let number_j = sorted.clone().find(|(n,count)| *count == 1 ).or(Some((0,2))).unwrap().0;
+        let sorted = count_1.sorted_unstable_by_key(|(count,_n)| { *count });
+        let number_j = sorted.clone().find(|(_n,count)| *count == 1 ).or(Some((0,2))).unwrap().0;
         let mut pair = 0;
         let mut brelan = false;
         let mut carre = false;
@@ -102,7 +101,7 @@ fn get_power_cards_b(vec: Vec<(Vec<u32>, u32)>) -> Vec<(u32, Vec<u32>, u32)> {
         let mut first= true;
         //println!("{:?}",sorted);
         for (mut count, n) in sorted.rev() {
-            if(n!=1) {
+            if n!=1 {
                 if first {
                     count += number_j;
                     first = false;
@@ -141,8 +140,8 @@ fn get_power_cards_b(vec: Vec<(Vec<u32>, u32)>) -> Vec<(u32, Vec<u32>, u32)> {
 fn compare_same_rank(mut input: Vec<(Vec<u32>, u32)>) -> Vec<(u32, u32)> { // return vec of rank,bet
     //input is just cards and bet
     input.sort_unstable_by(|this, that| {
-        let (cards_1, bet_1) = this;
-        let (cards_2, bet_2) = that;
+        let (cards_1, _bet_1) = this;
+        let (cards_2, _bet_2) = that;
         for i in 0..cards_1.len() {
             if cards_1[i] > cards_2[i] {
                 return cards_1[i].cmp(&cards_2[i]);
@@ -154,7 +153,7 @@ fn compare_same_rank(mut input: Vec<(Vec<u32>, u32)>) -> Vec<(u32, u32)> { // re
     });
     let mut ind: u32 = 0;
 
-    return input.into_iter().map(|(cards, bet)| {
+    return input.into_iter().map(|(_cards, bet)| {
         ind += 1;
         (ind, bet)
     }).collect();

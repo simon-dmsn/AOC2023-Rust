@@ -43,7 +43,7 @@ fn how_many_steps(from : &str, to : &str, map : HashMap<&str,[&str;2]>,path : Ve
 
     return count;
 }
-
+#[allow(dead_code)]
 fn how_many_steps_par(start_list : Vec<&str>, end_set : HashSet<&str>, map : HashMap<&str,[&str;2]>,path : Vec<u32>) -> u64 {
     println!("{:?}",start_list);
     println!("{:?}",end_set);
@@ -51,7 +51,7 @@ fn how_many_steps_par(start_list : Vec<&str>, end_set : HashSet<&str>, map : Has
     let mut it_list : Vec<&str> = start_list.clone();
     let mut index : usize = 0;
     let mut count : u64 = 0;
-    while(finished != start_list.len()) {
+    while finished != start_list.len() {
         finished = 0;
         index = index % path.len();
         for i in 0..start_list.len()  {

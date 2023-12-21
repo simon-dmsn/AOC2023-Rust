@@ -16,13 +16,13 @@ fn parse_a(input: &str) -> Vec<(Dir,i64)> {
  fn parse_b(input: &str) -> Vec<(Dir,i64)> {
 
      return input.lines().map(|f| {
-         let mut l = f.split_once('#').unwrap().1;
+         let l = f.split_once('#').unwrap().1;
          let split = l.split_at(5);
          ( match split.1.get(0..1).unwrap() {"2"=> Dir::LEFT, "0" => Dir::RIGHT, "3" => Dir::UP, "1" => Dir::DOWN, _ => unreachable!()},i64::from_str_radix(split.0,16).unwrap())
      }).collect()
  }
 fn solve(parsed_input : Vec<(Dir,i64)>) -> u64 {
-    let mut digged_places = parsed_input;
+    let digged_places = parsed_input;
     let mut perimeter: i64 = 0;
     let mut updating_area = 0;
     let mut actual_pos = (0,0);

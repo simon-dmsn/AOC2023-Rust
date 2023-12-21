@@ -51,7 +51,7 @@ fn count_all_pairs(matrix: Vec<Vec<char>>) -> u64 {
         let mut own_count = 0usize;
 
         for (x, line) in matrix.clone().into_iter().enumerate() {
-            for (y, _char) in line.into_iter().enumerate().filter(|(y, c)| *c == '#') {
+            for (y, _char) in line.into_iter().enumerate().filter(|(_y, c)| *c == '#') {
                 if selected {
                     big_count += max(x, selection.0) - min(x, selection.0) + max(y, selection.1) - min(y, selection.1);
                 } else {
@@ -106,7 +106,7 @@ fn count_all_pairs_b(matrix: Vec<Vec<char>>) -> u64 {
 
 
         for (y, line) in matrix.clone().into_iter().enumerate() {
-            for (x, _char) in line.clone().into_iter().enumerate().filter(|(y, c)| *c == '#') {
+            for (x, _char) in line.clone().into_iter().enumerate().filter(|(_y, c)| *c == '#') {
                 if selected {
                     big_count += count_steps_between_two_positions_b(matrix.clone(), selection, (x, y)) as u64;
                 } else {

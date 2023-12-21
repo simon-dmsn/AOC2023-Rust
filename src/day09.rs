@@ -1,4 +1,3 @@
-use num::abs;
 
 fn parse_input(input: &str) -> Vec<Vec<i64>> {
     let mut vec = vec![];
@@ -19,12 +18,11 @@ fn get_next_number(mut line: Vec<i64>) -> i64 {
     let mut sum = line.last().unwrap().clone();
 
     while !full_of_zeros {
-        let mut temp_vec = vec![];
         let mut count_of_zeros = 0;
 
-        temp_vec = line.windows(2).map(|wind| {
+        let temp_vec : Vec<i64> = line.windows(2).map(|wind| {
             let t = wind[1] - wind[0];
-            if(t==0) { count_of_zeros +=1};
+            if t==0 { count_of_zeros +=1};
             t
         }).collect();
         line = temp_vec.to_owned();
@@ -35,7 +33,7 @@ fn get_next_number(mut line: Vec<i64>) -> i64 {
 }
 
 fn solve_a(input: &str) -> i64 {
-    let mut inp = parse_input(input);
+    let inp = parse_input(input);
 
     let mut big_sum = 0;
     for line in inp {
@@ -47,7 +45,7 @@ fn solve_a(input: &str) -> i64 {
 }
 
 fn solve_b(input: &str) -> i64 {
-    let mut inp = parse_input(input);
+    let inp = parse_input(input);
 
     let mut big_sum = 0;
     for mut line in inp {
