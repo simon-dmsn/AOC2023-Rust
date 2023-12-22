@@ -1,15 +1,15 @@
 
-fn solve_a(input: &str) -> u64 { 
-    
-    
-    
+fn solve_a(input: &str) -> u64 {
+
+
+
     return 0;
 }
 
 fn solve_b(input: &str) -> u64 {
-    
-    
-    
+
+
+
     return 0;
 }
 
